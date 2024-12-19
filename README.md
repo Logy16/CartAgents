@@ -1,12 +1,12 @@
 # CartAgents
 
-## Description
+## Description de l'approche
 
-Cette application permet de gérer un panier d'achat avec des produits, en effectuant des recherches en ligne via l'API OpenAI. Elle expose un seul endpoint pour interagir avec trois agents :
+On organise le projet autour des 3 agents que l'on doit créer. On regroupe les agents dans le même module et on crée ensuite un service pour chaque agent.
 
     Agent de Gestion de Panier : Ajouter, supprimer, et lister les produits.
     Agent Tavily : Recherche de produits en ligne.
-    Agent Coordinateur : Orchestration des actions entre les agents.
+    Agent Coordinateur/Langgraph : Le service Coordinateur va créer le graphe du service Langgraph qui lui va coordonner les actions à faire en fonction de la requête utilisateur
     
 ## Installation
 
@@ -38,6 +38,11 @@ Requête pour ajouter un produit :
 curl -G -X GET "http://localhost:3000/invoke" --data-urlencode "query=Je souhaite acheter un sapin pour Noël, chercher chez Ikea si un sapin est disponible et ajoute-le au panier"
 ```
 
+Requête pour supprimer un produit :
+
+```
+curl -G -X GET "http://localhost:3000/invoke?" --data-urlencode "query=Je souhaite supprimer l'article sapin"
+```
 
 Requête pour afficher le panier :
 
