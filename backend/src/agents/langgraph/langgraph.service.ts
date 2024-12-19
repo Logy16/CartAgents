@@ -1,4 +1,3 @@
-// src/langgraph/langgraph.service.ts
 import { Injectable } from '@nestjs/common';
 import { AIMessage, BaseMessage, HumanMessage } from "@langchain/core/messages";
 import { tool } from "@langchain/core/tools";
@@ -16,7 +15,7 @@ export class LanggraphService {
   private checkpointer;
 
   constructor(private readonly cartService: CartService) {
-    // Define the graph state
+
     const StateAnnotation = Annotation.Root({
       messages: Annotation<BaseMessage[]>({
         reducer: messagesStateReducer,
@@ -37,14 +36,21 @@ export class LanggraphService {
       }),
     });
 
-    const removeProductTool = tool(async ({ productId }) => {
-      this.cartService.removeProduct(productId);
-      return `Le produit a été supprimé du panier.`;
+    const removeProductTool = tool(async ({ productName }) => {;
+      const product = this.cartService.listProducts().find(product =>
+        product.name.toLowerCase().includes(productName.toLowerCase())
+      );
+      if (product) {
+        this.cartService.removeProduct(product.id);
+        return `Le produit "${product.name}" a été supprimé du panier.`;
+      } else {
+        return `Le produit "${productName}" n'a pas été trouvé dans le panier.`;
+      }
     }, {
       name: "removeProduct",
-      description: "Supprimer un produit du panier.",
+      description: "Supprimer un produit du panier par nom.",
       schema: z.object({
-        productId: z.string().describe("L'ID du produit à supprimer."),
+        productName: z.string().describe("Le nom du produit à supprimer."),
       }),
     });
 

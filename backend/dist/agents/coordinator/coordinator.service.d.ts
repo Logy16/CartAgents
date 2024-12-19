@@ -1,8 +1,6 @@
-import { CartService } from '../cart/cart.service';
-import { TavilyService } from '../tavily/tavily.service';
+import { LanggraphService } from '../langgraph/langgraph.service';
 export declare class CoordinatorService {
-    private readonly cartService;
-    private readonly tavilyService;
-    constructor(cartService: CartService, tavilyService: TavilyService);
-    handleQuery(query: string): Promise<string>;
+    private readonly langgraphService;
+    constructor(langgraphService: LanggraphService);
+    handleQuery(query: string): Promise<any>;
 }
