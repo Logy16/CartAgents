@@ -14,7 +14,7 @@ Clonez le repository et installez les dépendances :
 
 ```
 git clone <url_du_repertoire>
-cd <dossier>
+cd <dossier>/backend
 npm install
 ```
 
